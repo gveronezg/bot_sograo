@@ -13,9 +13,18 @@ def obter_dados():
     print("\nArquivos disponíveis:")
     for i, arq in enumerate(arquivos, start=1):
         print(f"{i}. {arq}")
-    
-    idx = int(input("Escolha o número do arquivo: ")) - 1
-    # header=2 considera a 3ª linha como cabeçalho (0, 1, 2)
+
+    while True:
+        try:
+            idx = int(input("Escolha o número do arquivo: "))
+            # Verifica se o número está entre 1 e o total de arquivos na lista
+            if 1 <= idx <= len(arquivos):
+                idx = idx - 1
+                break
+            else:
+                print(f"Número inválido! Escolha uma opção entre 1 e {len(arquivos)}.")
+        except ValueError:
+            print("Entrada inválida! Por favor, digite apenas números.")
 
     pw = "@.3461@BHc"
     while True:
