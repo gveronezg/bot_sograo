@@ -70,7 +70,7 @@ def realizar_login(pw, page):
         print("Ocorreu um erro ou o tempo de aprovação expirou.")
         raise e
 
-def lancar_mandado(page, linha, num_atual, total):
+def lancar_mandado(df_dados, page, linha, num_atual, total):
     # INSERINDO PROCESSO
     page.get_by_role("textbox", name="N° do Processo").fill(str(linha['PROCESSO']))
     # INSERINDO MANDADO
@@ -123,6 +123,20 @@ def lancar_mandado(page, linha, num_atual, total):
         print(f"Registro {num_atual}/{total} concluído. Abrindo nova inclusão...")
         page.get_by_role("button", name="Nova Inclusão").click()
 
+    # 1. Atualiza o DataFrame na memória
+    df_dados.at[linha, 'CONTROLE'] = 'S'
+
+    # 2. Sobrescreve o arquivo original
+    try:
+        df_dados.to_excel(caminho_arquivo, index=False)
+        print(f"Planilha atualizada e salva para o processo: {linha['PROCESSO']}")
+    except PermissionError:
+        print(f"AVISO: Não foi possível salvar. Feche o arquivo {caminho_arquivo}!")
+
+    page.wait_for_timeout(pausa * 1000)
+
+#################################################################################################################################################################################################################################################################################################################
+
     page.wait_for_timeout(500) # Aguarda o sistema processar a transição
     print(f"Processo: {linha['PROCESSO']} incluído com sucesso!")
 
@@ -158,7 +172,7 @@ def iniciar_automacao():
             for index, linha in df_dados.iterrows():
                 if linha['FORMA PAGAMENTO'] == 'JUSTIÇA PAGA':
                     print(f"Lançando processo: {linha['PROCESSO']}")
-                    lancar_mandado(page, linha, index + 1, total_registros)
+                    lancar_mandado(df_dados, page, linha, index + 1, total_registros)
                 else:
                     pass
             
