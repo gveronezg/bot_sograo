@@ -7,7 +7,7 @@ print('-------------------------------------------------------------------------
 
 def iniciar():
     # Lendo os arquivos presentes na pasta atual ignorando arquivos desnecessários
-    arquivos = [arq for arq in os.listdir() if not arq.endswith(('.ipynb', '.venv', '.py', '.git', '.txt', '.exe'))]
+    arquivos = [arq for arq in os.listdir() if arq.lower().endswith(('.xlsx'))]
 
     print("Arquivos disponíveis para processamento:")
     for i, arq in enumerate(arquivos, start=1):
@@ -15,12 +15,18 @@ def iniciar():
     print('----------------------------------------------------------------------------------------------------')
     while True:
         try:
-            saj = int(input("Entre com o número do relatório SAJ a ser transformado: ")) - 1
-            arquivo_selecionado = arquivos[saj]
-            break
-        except (ValueError, IndexError):
-            print("Entrada inválida. Digite um número válido da lista.")
-    print('----------------------------------------------------------------------------------------------------')
+            saj = int(input("Entre com o número do relatório SAJ a ser transformado: "))
+            # Verifica se o número está entre 1 e o total de arquivos na lista
+            if 1 <= saj <= len(arquivos):
+                arquivo_selecionado = arquivos[saj]
+                saj = saj - 1
+                break
+            else:
+                print(f"Número inválido! Escolha uma opção entre 1 e {len(arquivos)}.")
+        except ValueError:
+            print("Entrada inválida! Por favor, digite apenas números.")
+    print    
+    ('----------------------------------------------------------------------------------------------------')
     dados = pd.read_excel(arquivo_selecionado, engine='calamine', header=2, dtype={'Processo': str}) 
     
     # Validações iniciais

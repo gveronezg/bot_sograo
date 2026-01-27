@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+print('----------------------------------------------------------------------------------------------------')
 print('Bem vindo Sogrão!')
 print('----------------------------------------------------------------------------------------------------')
 
@@ -12,7 +13,6 @@ def iniciar():
     for i, arq in enumerate(arquivos, start=1):
         print(f"{i}. {arq}")
     print('----------------------------------------------------------------------------------------------------')
-    
     while True:
         try:
             saj = int(input("Entre com o número do arquivo SAJ a ser transformado: ")) - 1
