@@ -1,9 +1,10 @@
-.venv
-/build
-/dist
-/xlsx
+# Pastas a serem ignoradas
+.venv/
+/build/
+/dist/
+/xlsx/
+/pycache/
 
-dados
-
+# Arquivos de dados a serem ignorados
 /RELATORIO TESTE OUT-DEZ 2025.xlsx
 /Dados_Tratados_Fevereiro.xlsx
