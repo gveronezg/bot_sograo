@@ -1,0 +1,84 @@
+2026-02-03 22:23:10,501 - ETL_SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:23:25,652 - ETL_SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-03 22:23:25,673 - ETL_SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-03 22:23:37,223 - ETL_SAJ - INFO - Filtrando dados para o mês: Novembro
+2026-02-03 22:23:37,225 - ETL_SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-03 22:23:37,451 - ETL_SAJ - INFO - 💾 Dump de dados concluído com sucesso.
+2026-02-03 22:23:37,451 - ETL_SAJ - INFO - 📍 Localização: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Novembro.xlsx
+2026-02-03 22:23:37,451 - ETL_SAJ - INFO - ETL FINALIZADO COM SUCESSO.
+2026-02-03 22:25:58,334 - ETL_SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:26:19,563 - ETL_SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:26:49,986 - ETL_SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:27:25,506 - ETL_SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:27:29,504 - ETL_SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-03 22:27:29,525 - ETL_SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-03 22:27:35,628 - ETL_SAJ - INFO - Filtrando dados para o mês: Dezembro
+2026-02-03 22:27:35,630 - ETL_SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-03 22:27:35,843 - ETL_SAJ - INFO - 💾 Dump de dados concluído com sucesso.
+2026-02-03 22:27:35,843 - ETL_SAJ - INFO - 📍 Localização: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dezembro.xlsx
+2026-02-03 22:27:35,843 - ETL_SAJ - INFO -                                     ETL FINALIZADO COM SUCESSO.
+2026-02-03 22:29:07,183 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:29:09,993 - ETL-SAJ - INFO - Carregando: Dezembro.xlsx
+2026-02-03 22:29:10,006 - ETL-SAJ - ERROR - Falha Inesperada no Pipeline: "Coluna obrigatória 'Receb. central' não encontrada."
+Traceback (most recent call last):
+  File "f:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Pipeline_ETL.py", line 20, in main
+    df_bruto, meses_disponiveis = executar_extracao()
+                                  ~~~~~~~~~~~~~~~~~^^
+  File "f:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\a2extrator.py", line 64, in executar_extracao
+    df = extrator.carregar_e_validar(selecionado)
+  File "f:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\a2extrator.py", line 55, in carregar_e_validar
+    raise KeyError(f"Coluna obrigatória '{config.DATE_COLUMN}' não encontrada.")
+KeyError: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:29:33,016 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:29:41,638 - ETL-SAJ - INFO - Carregando: Dezembro.xlsx
+2026-02-03 22:29:41,645 - ETL-SAJ - ERROR - Falha Inesperada no Pipeline: "Coluna obrigatória 'Receb. central' não encontrada."
+Traceback (most recent call last):
+  File "f:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Pipeline_ETL.py", line 20, in main
+    df_bruto, meses_disponiveis = executar_extracao()
+                                  ~~~~~~~~~~~~~~~~~^^
+  File "f:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\a2extrator.py", line 64, in executar_extracao
+    df = extrator.carregar_e_validar(selecionado)
+  File "f:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\a2extrator.py", line 55, in carregar_e_validar
+    raise KeyError(f"Coluna obrigatória '{config.DATE_COLUMN}' não encontrada.")
+KeyError: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:35:02,354 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:35:08,276 - ETL-SAJ - INFO - Carregando: Dezembro.xlsx
+2026-02-03 22:35:08,284 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:35:32,563 - ETL-SAJ - INFO - Carregando: Dezembro.xlsx
+2026-02-03 22:35:32,569 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:35:33,449 - ETL-SAJ - INFO - Carregando: Dezembro.xlsx
+2026-02-03 22:35:33,455 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:35:34,393 - ETL-SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-03 22:35:34,410 - ETL-SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-03 22:35:50,493 - ETL-SAJ - INFO - Filtrando dados para o mês: Dezembro
+2026-02-03 22:35:50,495 - ETL-SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-03 22:35:50,704 - ETL-SAJ - INFO - 💾 Dump de dados concluído com sucesso.
+2026-02-03 22:35:50,704 - ETL-SAJ - INFO - 📍 Localização: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dezembro.xlsx
+2026-02-03 22:35:50,704 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
+2026-02-03 22:46:51,180 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:46:55,579 - ETL-SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-03 22:46:55,599 - ETL-SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-03 22:47:13,941 - ETL-SAJ - INFO - Iniciando tratamento pesado: Mês Dezembro, Cota 111.06
+2026-02-03 22:47:13,953 - ETL-SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-03 22:47:14,168 - ETL-SAJ - INFO - 💾 Carga concluída: 230 registros processados.
+2026-02-03 22:47:14,168 - ETL-SAJ - INFO - 📍 Arquivo salvo em: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dados_Tratados_Dezembro.xlsx
+2026-02-03 22:47:14,169 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
+2026-02-03 22:48:51,507 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:48:55,176 - ETL-SAJ - INFO - Carregando: Dados_Tratados_Dezembro.xlsx
+2026-02-03 22:48:55,189 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:50:35,296 - ETL-SAJ - INFO - Carregando: Dados_Tratados_Dezembro.xlsx
+2026-02-03 22:50:35,303 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:50:36,407 - ETL-SAJ - INFO - Carregando: Dados_Tratados_Dezembro.xlsx
+2026-02-03 22:50:36,415 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:50:46,447 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-03 22:50:49,268 - ETL-SAJ - INFO - Carregando: Dados_Tratados_Dezembro.xlsx
+2026-02-03 22:50:49,279 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:50:54,183 - ETL-SAJ - INFO - Carregando: Dados_Tratados_Dezembro.xlsx
+2026-02-03 22:50:54,190 - ETL-SAJ - WARNING - ⚠️ O arquivo selecionado é inválido: "Coluna obrigatória 'Receb. central' não encontrada."
+2026-02-03 22:50:57,022 - ETL-SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-03 22:50:57,040 - ETL-SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-03 22:51:22,922 - ETL-SAJ - INFO - Iniciando tratamento pesado: Mês Novembro, Cota 333.0
+2026-02-03 22:51:22,934 - ETL-SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-03 22:51:23,168 - ETL-SAJ - INFO - 💾 Carga concluída: 328 registros processados.
+2026-02-03 22:51:23,168 - ETL-SAJ - INFO - 📍 Arquivo salvo em: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dados_Tratados_Novembro.xlsx
+2026-02-03 22:51:23,169 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
