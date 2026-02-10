@@ -1,6 +1,10 @@
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import os
+from dotenv import load_dotenv
+
+# Carrega as variáveis de ambiente do arquivo .env
+load_dotenv()
 
 def obter_dados():
     """Gerencia a escolha do arquivo e carrega os dados."""
@@ -37,23 +41,32 @@ def obter_dados():
         print("Entrada inválida! Digite um número de 0 a 1.")
     print(f'Número de JP definido como: {pausa}')
 
-    pw = "@.3461@BHc"
+    pw = os.getenv("USER_PASS")
+    if not pw:
+        print("AVISO: USER_PASS não encontrado no arquivo .env")
+
     while True:
-        input_pw = (input("Entre com sua nova senha, ou aperte ENTER para: @....Hc"))
+        input_pw = (input("Entre com sua nova senha, ou aperte ENTER para: @.....c"))
         if input_pw == "":
+            if not pw:
+                print("ERRO: Nenhuma senha definida no .env e nenhuma senha digitada.")
+                continue
             break
         else:
             pw = input_pw
-            print(f"Senha alterada de [ {pw} ] para [ {input_pw} ]")
+            print(f"Senha alterada.")
             break
-    print(f"Entrando com a senha: {pw}")
+    print(f"Prosseguindo com o login...")
 
     return pausa, pw, pd.read_excel(arquivos[idx], engine='calamine', header=0, dtype={'PROCESSO': str})
 
 def realizar_login(pw, page):
     page.goto("https://www.tjsp.jus.br/atc/cdm/auth/login")
+    email = os.getenv("USER_EMAIL")
+    if not email:
+        raise ValueError("USER_EMAIL não definido no arquivo .env")
     page.get_by_role("button", name="Entrar com @tjsp.jus.br").click()
-    page.get_by_role("textbox", name="someone@example.com").fill("robinsonp@tjsp.jus.br")
+    page.get_by_role("textbox", name="someone@example.com").fill(email)
     page.get_by_role("button", name="Avançar").click()
     page.get_by_role("textbox", name="Senha").fill(pw)
     page.get_by_role("button", name="Entrar").click()
@@ -75,7 +88,10 @@ def realizar_login(pw, page):
         page.get_by_role("checkbox", name="Não mostrar isso novamente").check()
         page.get_by_role("button", name="Sim").wait_for(state="visible", timeout=5000)
         page.get_by_role("button", name="Sim").click()
-        page.get_by_text("Olá, ROBINSON BARBOSA").wait_for(state="visible", timeout=60000)
+        name = os.getenv("USER_NAME")
+        if not name:
+            name = "SOGRAO" # Fallback apenas para o nome exibido
+        page.get_by_text(f"Olá, {name}").wait_for(state="visible", timeout=60000)
         print("Login realizado com sucesso!")
     except Exception as e:
         print("Ocorreu um erro ou o tempo de aprovação expirou.")

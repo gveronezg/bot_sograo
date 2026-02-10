@@ -1,7 +1,5 @@
 import logging
-# from pathlib import Path
 from dataclasses import dataclass
-# from typing import List
 
 # Configuração de Logging Profissional
 logging.basicConfig(

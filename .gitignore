@@ -8,4 +8,5 @@ __pycache__
 
 # Arquivos de dados a serem ignorados
 /RELATORIO TESTE OUT-DEZ 2025.xlsx
-/Dados_Tratados_Fevereiro.xlsx
+# /Dados_Tratados_Fevereiro.xlsx
+.env

@@ -82,3 +82,19 @@ KeyError: "Coluna obrigatória 'Receb. central' não encontrada."
 2026-02-03 22:51:23,168 - ETL-SAJ - INFO - 💾 Carga concluída: 328 registros processados.
 2026-02-03 22:51:23,168 - ETL-SAJ - INFO - 📍 Arquivo salvo em: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dados_Tratados_Novembro.xlsx
 2026-02-03 22:51:23,169 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
+2026-02-04 16:11:48,320 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-04 16:11:51,902 - ETL-SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-04 16:11:52,024 - ETL-SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-04 16:12:19,574 - ETL-SAJ - INFO - Iniciando tratamento pesado: Mês Novembro, Cota 111.06
+2026-02-04 16:12:19,593 - ETL-SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-04 16:12:19,963 - ETL-SAJ - INFO - 💾 Carga concluída: 328 registros processados.
+2026-02-04 16:12:19,963 - ETL-SAJ - INFO - 📍 Arquivo salvo em: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dados_Tratados_Novembro.xlsx
+2026-02-04 16:12:19,964 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
+2026-02-10 13:46:44,806 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-10 13:46:48,522 - ETL-SAJ - INFO - Carregando: RELATORIO TESTE OUT-DEZ 2025.xlsx
+2026-02-10 13:46:48,641 - ETL-SAJ - INFO - Iniciando Etapa de Transformação...
+2026-02-10 13:46:54,963 - ETL-SAJ - INFO - Iniciando tratamento pesado: Mês Outubro, Cota 111.06
+2026-02-10 13:46:54,978 - ETL-SAJ - INFO - Iniciando Etapa de Carga...
+2026-02-10 13:46:55,296 - ETL-SAJ - INFO - 💾 Carga concluída: 90 registros processados.
+2026-02-10 13:46:55,296 - ETL-SAJ - INFO - 📍 Arquivo salvo em: F:\Projetos_SSD_Velocidade_Github\BOT_SOGRAO\Dados_Tratados_Outubro.xlsx
+2026-02-10 13:46:55,296 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.

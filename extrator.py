@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import List, Tuple
 from constantes import config, logger
 
 class ExtratorExcel:
