@@ -1,70 +1,85 @@
-# BOT_SOGRAO - Automação TJSP
+# 🤖 BOT SOGRAO - Automação TJSP
 
-Este projeto contém scripts em Python para automatizar o lançamento de mandados e processos no sistema do Tribunal de Justiça de São Paulo (TJSP).
+Este projeto é uma solução completa de automação para o processamento e lançamento de mandados no portal do TJSP. Ele combina um pipeline de dados robusto (ETL) com scripts de automação de navegador para otimizar o fluxo de trabalho burocrático.
 
-## 📋 Pré-requisitos
+## 🚀 Funcionalidades
 
-Para executar os scripts, você precisará ter instalado:
+- **Pipeline ETL Inteligente**: Extrai, transforma e limpa relatórios brutos do sistema SAJ, preparando-os para o lançamento automático.
+- **Automação de Lançamento**: Scripts dedicados para mandados **PAGOS** e **GRATUITOS** utilizando Playwright.
+- **Gestão de Credenciais**: Armazenamento seguro de senhas e acessos via variáveis de ambiente (`.env`).
+- **Validação de Dados**: Verificação automática de integridade dos arquivos Excel antes do processamento.
 
-*   **Python 3.x**: [Download Python](https://www.python.org/downloads/)
-*   **Bibliotecas Python**: As dependências principais são `playwright`, `pandas` e `calamine`.
+---
 
-Instale as dependências executando:
+## 🛠️ Tecnologias Utilizadas
+
+- **Linguagem**: Python 3.x
+- **Automação Web**: [Playwright](https://playwright.dev/python/)
+- **Processamento de Dados**: [Pandas](https://pandas.pydata.org/)
+- **Leitura de Excel**: `python-calamine` (alta performance)
+- **Variáveis de Ambiente**: `python-dotenv`
+
+---
+
+## 📂 Estrutura do Projeto
+
+- `Pipeline_ETL_SAJ.py`: Orquestrador principal que processa o relatório do SAJ.
+- `GRATUITOS.py`: Automação de lançamentos de mandados de Justiça Gratuita.
+- `PAGOS.py`: Automação de lançamentos de mandados com Guia de Recolhimento (Pagos).
+- `extrator.py`, `transformador.py`, `carregador.py`: Módulos que compõem o pipeline de dados.
+- `constantes.py`: Configurações globais e sistema de logs.
+
+---
+
+## 🔧 Configuração e Instalação
+
+### 1. Requisitos
+Certifique-se de ter o Python instalado e execute o seguinte comando para instalar as dependências:
 
 ```bash
-pip install playwright pandas calamine openpyxl
-playwright install
+pip install -r requirements.txt
+playwright install chromium
 ```
 
-## 🚀 Como Usar
+### 2. Variáveis de Ambiente
+Crie um arquivo chamado `.env` na raiz do projeto conforme o modelo abaixo:
 
-O fluxo de trabalho consiste em duas etapas principais: **Transformação de Dados** e **Automação de Lançamento**.
+```env
+USER_EMAIL=seu_email@tjsp.jus.br
+USER_PASS=sua_senha_aqui
+USER_NAME=SEU_NOME_COMPLETO
+```
 
-### 1. Transformação de Dados (`TRANSFORMADOR.py`)
+---
 
-O primeiro passo é preparar a planilha de dados extraída do sistema (relatório SAJ).
+## 📋 Como Usar
 
-1.  Coloque o arquivo Excel (`.xlsx`) na mesma pasta do script.
-2.  Execute o script:
-    ```bash
-    python TRANSFORMADOR.py
-    ```
-3.  Siga as instruções no terminal:
-    *   Selecione o arquivo desejado.
-    *   Informe o mês de referência.
-    *   Confirme os valores de Cota, JG (Justiça Gratuita) e Deslocamento.
-4.  O script irá gerar um novo arquivo Excel (ex: `Dados_Tratados_do_Mês_X.xlsx`) pronto para a automação.
+### Passo 1: Preparar os Dados
+Coloque o relatório Excel gerado pelo SAJ na pasta do projeto e execute o pipeline:
+```bash
+python Pipeline_ETL_SAJ.py
+```
+*Siga as instruções no terminal para selecionar o arquivo, o mês de referência e os valores das cotas.*
 
-### 2. Automação de Lançamento (`GRATUITOS.py` e `PAGOS.py`)
+### Passo 2: Lançamento Automático
+Com o arquivo tratado gerado (ex: `Dados_Tratados_Fevereiro.xlsx`), execute o robô correspondente:
 
-Com os dados tratados, você pode iniciar a automação. Existem dois scripts, dependendo do tipo de processo:
+**Para mandados gratuitos:**
+```bash
+python GRATUITOS.py
+```
 
-*   **`GRATUITOS.py`**: Para processos com Justiça Gratuita.
-*   **`PAGOS.py`**: Para processos com Justiça Paga.
+**Para mandados pagos:**
+```bash
+python PAGOS.py
+```
 
-**Passos:**
+---
 
-1.  Execute o script correspondente:
-    ```bash
-    python GRATUITOS.py
-    # ou
-    python PAGOS.py
-    ```
-2.  Selecione o arquivo *tratado* gerado na etapa anterior.
-3.  O script abrirá um navegador (Chromium) controlado pelo Playwright.
-4.  Realize o login no sistema TJSP quando solicitado (o script auxilia preenchendo o usuário, mas pode requerer aprovação MFA).
-5.  A automação começará a lançar os dados linha por linha.
+## 🛡️ Segurança e Logs
 
-## 🛠️ Estrutura dos Arquivos
+- O arquivo `.env` está configurado no `.gitignore` para nunca ser enviado ao repositório.
+- Todos os processos geram logs detalhados no arquivo `pipeline.log` para facilitar a auditoria e correção de erros.
 
-*   `TRANSFORMADOR.py`: Limpa e padroniza os dados do relatório SAJ.
-*   `TRANSFORMADOR8Colums.py`: Versão alternativa/template do transformador.
-*   `GRATUITOS.py`: Script de automação para lançamentos gratuitos.
-*   `PAGOS.py`: Script de automação para lançamentos pagos (inclui verificação de pausas).
-*   `inicial.ipynb`: Notebook Jupyter para testes e desenvolvimento (opcional).
-
-## ⚠️ Notas Importantes
-
-*   **Senha**: O script possui uma senha padrão configurada (`@.3461@BHc`), mas permite alteração durante a execução.
-*   **MFA (Autenticação de Dois Fatores)**: O script aguarda a aprovação no Microsoft Authenticator. Fique atento ao seu dispositivo móvel.
-*   **Monitoramento**: Acompanhe o terminal para ver o progresso e possíveis mensagens de erro.
+---
+*Desenvolvido para otimização de fluxos jurídicos.*

@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-# Configuração de Logging Profissional
+# Configuração de Logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

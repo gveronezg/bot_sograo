@@ -4,9 +4,9 @@ from extrator import executar_extracao
 from transformador import executar_transformacao
 from carregador import executar_carga
 
+# Orquestrador Principal
 def main():
     """
-    Orquestrador Principal (Senior Data Pipeline)
     Gerencia o ciclo de vida completo do ETL com tratamento de erros global.
     """
     

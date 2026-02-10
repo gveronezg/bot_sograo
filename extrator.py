@@ -59,7 +59,6 @@ class ExtratorExcel:
 def executar_extracao() -> Tuple[pd.DataFrame, List[int]]:
     """
     Função Wrapper que garante a extração de um arquivo válido.
-    Permite múltiplas tentativas caso o arquivo selecionado seja inválido.
     """
     extrator = ExtratorExcel()
     arquivos = extrator.buscar_arquivos()
@@ -81,4 +80,3 @@ def executar_extracao() -> Tuple[pd.DataFrame, List[int]]:
             print(f" ERRO NA ESTRUTURA: {e}")
             print(" Por favor, selecione outro relatório SAJ válido.")
             print("!"*100 + "\n")
-            # O loop continua, permitindo nova seleção.
