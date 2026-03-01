@@ -140,7 +140,7 @@ def lancar_mandado(df_dados, page, linha, num_atual, total):
         page.get_by_role("button", name="Nova Inclusão").click()
 
     # 1. Atualiza o DataFrame na memória
-    df_dados.at[linha, 'CONTROLE'] = 'S'
+    df_dados.at[index, 'CONTROLE'] = 'S'
 
     # 2. Sobrescreve o arquivo original
     try:
@@ -186,7 +186,7 @@ def iniciar_automacao():
             total_registros = len(df_dados)
 
             for index, linha in df_dados.iterrows():
-                if linha['FORMA PAGAMENTO'] == 'JUSTIÇA PAGA':
+                if linha['FORMA PAGAMENTO'] == 'JUSTIÇA GRATUITA':
                     print(f"Lançando processo: {linha['PROCESSO']}")
                     lancar_mandado(df_dados, page, linha, index + 1, total_registros)
                 else:

@@ -1,0 +1,6 @@
+2026-02-08 18:26:20,003 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-08 18:26:20,005 - ETL-SAJ - ERROR - Nenhum arquivo .xlsx encontrado no diretório.
+2026-02-08 18:26:20,005 - ETL-SAJ - ERROR - Arquivo não encontrado: Nenhum relatório Excel (.xlsx) disponível.
+2026-02-10 10:18:34,608 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-02-10 10:18:34,609 - ETL-SAJ - ERROR - Nenhum arquivo .xlsx encontrado no diretório.
+2026-02-10 10:18:34,610 - ETL-SAJ - ERROR - Arquivo não encontrado: Nenhum relatório Excel (.xlsx) disponível.
