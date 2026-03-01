@@ -117,9 +117,14 @@ class TransformadorDados:
 
         return tratados
 
-def executar_transformacao(df: pd.DataFrame, meses: List[int]) -> Tuple[pd.DataFrame, str]:
+def executar_transformacao(df: pd.DataFrame, meses: List[int]) -> Tuple[pd.DataFrame, str, str]:
     """Orquestra a parametrização e transformação."""
     t = TransformadorDados()
     t.parametrizar(meses)
+    
+    # Extrai o ano do primeiro registro válido do mês selecionado
+    ano = df[df[config.DATE_COLUMN].dt.month == t.mes_numero][config.DATE_COLUMN].dt.year.iloc[0]
+    mes_ano_formatado = f"{t.mes_numero:02d}_{ano}"
+    
     df_final = t.aplicar_transformacoes(df)
-    return df_final, t.mes_nome
+    return df_final, t.mes_nome, mes_ano_formatado

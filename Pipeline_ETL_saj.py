@@ -21,11 +21,11 @@ def main():
         
         # Step 2: Transform
         logger.info("Iniciando Etapa de Transformação...")
-        df_limpo, mes_nome = executar_transformacao(df_bruto, meses_disponiveis)
+        df_limpo, mes_nome, mes_ano = executar_transformacao(df_bruto, meses_disponiveis)
         
         # Step 3: Load
         logger.info("Iniciando Etapa de Carga...")
-        executar_carga(df_limpo, mes_nome)
+        executar_carga(df_limpo, mes_ano)
 
         print("\n" + "="*100)
         logger.info("                  ETL FINALIZADO COM SUCESSO.")

@@ -6,15 +6,15 @@ class CarregadorExcel:
     """Lógica para salvar e exportar dados processados."""
 
     @staticmethod
-    def para_excel(df: pd.DataFrame, mes_nome: str):
+    def para_excel(df: pd.DataFrame, mes_ano: str):
         """Salva o DataFrame final em um arquivo Excel."""
         if df.empty:
             logger.warning("Nenhum dado para salvar.")
             return
 
         try:
-            # Nome do arquivo profissional: Dados_Tratados_Mes.xlsx
-            nome_arquivo = f"Dados_Tratados_{mes_nome}.xlsx"
+            # Formato esperado: Dados_Tratados_MM_AAAA.xlsx
+            nome_arquivo = f"Dados_Tratados_{mes_ano}.xlsx"
             caminho_saida = Path(nome_arquivo).resolve()
             
             df.to_excel(caminho_saida, index=False)
@@ -31,6 +31,6 @@ class CarregadorExcel:
             logger.error(f"Erro ao salvar arquivo: {e}")
             raise
 
-def executar_carga(df: pd.DataFrame, mes_nome: str):
+def executar_carga(df: pd.DataFrame, mes_ano: str):
     """Entrypoint para etapa de Load."""
-    CarregadorExcel.para_excel(df, mes_nome)
+    CarregadorExcel.para_excel(df, mes_ano)

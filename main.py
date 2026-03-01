@@ -48,6 +48,25 @@ def main():
             btn1.wait_for(state="visible", timeout=60000)
             btn1.click()
 
+            # Extrai o MM_AAAA do nome do arquivo
+            import re
+            match = re.search(r"(\d{2})_(\d{4})", caminho_arquivo)
+            mes_ano_portal = ""
+            if match:
+                mes_ano_portal = f"{match.group(1)}/{match.group(2)}"
+                print(f"📅 Mês/Ano detectado no arquivo: {mes_ano_portal}")
+
+            # seleciona o campo de mes para lancamentos
+            page.get_by_role("combobox", name="mm/aaaa").click()
+            # control + a para selecionar todo o texto
+            page.keyboard.press("Control+A")
+            # apaga o texto selecionado
+            page.keyboard.press("Delete")
+            # entra com o mes e ano do definido no nome do arquivo
+            if mes_ano_portal:
+                page.keyboard.type(mes_ano_portal)
+                page.keyboard.press("Enter")
+
             btn2 = page.get_by_label("Adicionar").get_by_role("button", name=" Adicionar Mandado")
             btn2.wait_for(state="visible", timeout=5000)
             btn2.click()
@@ -60,7 +79,7 @@ def main():
 
             contador = 1
             for index, linha in df_dados.iterrows():
-                # Processa apenas o tipo selecionado e que ainda नहीं (não) foi enviado
+                # Processa apenas o tipo selecionado e que ainda (não) foi enviado
                 if linha['FORMA PAGAMENTO'] == filtro and linha.get('CONTROLE') != 'S':
                     print(f"[{contador}/{total_registros}] Processo: {linha['PROCESSO']}")
                     
