@@ -6,8 +6,19 @@ from playwright.sync_api import sync_playwright
 load_dotenv()
 
 def configurar_navegador(p):
-    """Inicializa o browser e a página."""
-    browser = p.chromium.launch(headless=False)
+    """Inicializa o browser e a página, instalando drivers se necessário."""
+    try:
+        browser = p.chromium.launch(headless=False)
+    except Exception as e:
+        if "Executable doesn't exist" in str(e) or "playwright install" in str(e).lower():
+            print("\n⚠️  Navegador não encontrado! Iniciando instalação automática (isso só acontece uma vez)...")
+            import subprocess
+            import sys
+            subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+            browser = p.chromium.launch(headless=False)
+        else:
+            raise e
+            
     context = browser.new_context()
     page = context.new_page()
     return browser, page
