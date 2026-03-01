@@ -1,202 +1,60 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import Page
 import pandas as pd
-import os
-from dotenv import load_dotenv
 
-# Carrega as variáveis de ambiente do arquivo .env
-load_dotenv()
-
-def obter_dados():
-    """Gerencia a escolha do arquivo e carrega os dados."""
-    arquivos = [arq for arq in os.listdir() if arq.endswith(('.xlsx', '.csv'))]
+def lancar_mandado_pago(page: Page, linha, index, num_atual, total, pausa, caminho_arquivo, df_dados):
+    """Lógica específica para preenchimento de mandados Pagos."""
     
-    if not arquivos:
-        print("Nenhum arquivo de dados encontrado.")
-        return None, None, None
-
-    print("\nArquivos disponíveis:")
-    for i, arq in enumerate(arquivos, start=1):
-        print(f"{i}. {arq}")
-
-    while True:
-        try:
-            idx = int(input("Escolha o número do arquivo: "))
-            # Verifica se o número está entre 1 e o total de arquivos na lista
-            if 1 <= idx <= len(arquivos):
-                idx = idx - 1
-                break
-            else:
-                print(f"Número inválido! Escolha uma opção entre 1 e {len(arquivos)}.")
-        except ValueError:
-            print("Entrada inválida! Por favor, digite apenas números.")
-
-    pausa = 4
-    while True:
-        entrada_pausa = input("Defina quantos segundos de pausa entre 5 e 9. Para 4 apenas pressione ENTER: ").strip()
-        if entrada_pausa == "":
-            break
-        if entrada_pausa in ["5", "6", "7", "8", "9"]:
-            pausa = int(entrada_pausa)
-            break
-        print("Entrada inválida! Digite um número de 0 a 1.")
-    print(f'Número de JP definido como: {pausa}')
-
-    pw = os.getenv("USER_PASS")
-    if not pw:
-        print("AVISO: USER_PASS não encontrado no arquivo .env")
-
-    while True:
-        input_pw = (input("Entre com sua nova senha, ou aperte ENTER para: @.....c"))
-        if input_pw == "":
-            if not pw:
-                print("ERRO: Nenhuma senha definida no .env e nenhuma senha digitada.")
-                continue
-            break
-        else:
-            pw = input_pw
-            print(f"Senha alterada.")
-            break
-    print(f"Prosseguindo com o login...")
-
-    return pausa, pw, pd.read_excel(arquivos[idx], engine='calamine', header=0, dtype={'PROCESSO': str})
-
-def realizar_login(pw, page):
-    page.goto("https://www.tjsp.jus.br/atc/cdm/auth/login")
-    email = os.getenv("USER_EMAIL")
-    if not email:
-        raise ValueError("USER_EMAIL não definido no arquivo .env")
-    page.get_by_role("button", name="Entrar com @tjsp.jus.br").click()
-    page.get_by_role("textbox", name="someone@example.com").fill(email)
-    page.get_by_role("button", name="Avançar").click()
-    page.get_by_role("textbox", name="Senha").fill(pw)
-    page.get_by_role("button", name="Entrar").click()
-    print("Aguardando aprovação no Microsoft Authenticator...")
-    
-    # 1. Verifica se aparece a opção "Aprovar uma solicitação"
-    try:
-        # Timeout curto (5s) pois se não aparecer rápido, o sistema deve ter ido direto para o MFA
-        page.get_by_role("button", name="Aprovar uma solicitação em").wait_for(state="visible", timeout=5000)
-        page.get_by_role("button", name="Aprovar uma solicitação em").click()
-        print("Botão de solicitação clicado. Verifique o Authenticator.")
-    except:
-        pass
-
-    # 2. Processo de confirmação de permanência logado
-    try:
-        # Espera o checkbox de 'Não mostrar novamente' (indica que o MFA foi aprovado)
-        page.get_by_role("checkbox", name="Não mostrar isso novamente").wait_for(state="visible", timeout=60000)
-        page.get_by_role("checkbox", name="Não mostrar isso novamente").check()
-        page.get_by_role("button", name="Sim").wait_for(state="visible", timeout=5000)
-        page.get_by_role("button", name="Sim").click()
-        name = os.getenv("USER_NAME")
-        if not name:
-            name = "SOGRAO" # Fallback apenas para o nome exibido
-        page.get_by_text(f"Olá, {name}").wait_for(state="visible", timeout=60000)
-        print("Login realizado com sucesso!")
-    except Exception as e:
-        print("Ocorreu um erro ou o tempo de aprovação expirou.")
-        raise e
-
-def lancar_mandado(pausa, page, linha, num_atual, total):
-    # INSERINDO PROCESSO
+    # PREENCHIMENTO VIA TECLADO (Padrão PAGOS)
     page.get_by_role("textbox", name="N° do Processo").click()
     page.keyboard.press("Control+A")
     page.keyboard.press("Backspace")
     page.keyboard.type(str(linha['PROCESSO']))
     page.keyboard.press("Tab")
 
-    # INSERINDO MANDADO
+    # MANDADO, DESTINATÁRIO, N.GRD
     page.keyboard.type(str(linha['MANDADO']))
     page.keyboard.press("Tab")
-
-    # INSERINDO DESTINATÁRIO
     page.keyboard.type(str(linha['DESTINATÁRIO']))
     page.keyboard.press("Tab")
-
-    # INSERINDO GUIA (N.GRD)
     page.keyboard.press("Backspace")
-    page.keyboard.type(str(linha['N.GRD']))
+    page.keyboard.type(str(linha.get('N.GRD', '')))
     page.keyboard.press("Tab")
 
-    # INSERINDO RECEB. OFICIAL
+    # DATAS
+    def preencher_data_pago(data):
+        page.wait_for_timeout(300)
+        page.keyboard.press("Control+A")
+        page.keyboard.press("Backspace")
+        page.keyboard.type(str(data))
+        page.keyboard.press("Tab")
+        page.wait_for_timeout(100)
+        page.keyboard.press("Tab")
+
+    preencher_data_pago(linha['RECEB. OFICIAL'])
+    preencher_data_pago(linha['RECEB. CENTRAL'])
+
+    # VALOR
     page.wait_for_timeout(300)
     page.keyboard.press("Control+A")
     page.keyboard.press("Backspace")
-    page.keyboard.type(str(linha['RECEB. OFICIAL']))
-    page.keyboard.press("Tab")
-    page.wait_for_timeout(100)
-    page.keyboard.press("Tab")
-
-    # INSERINDO RECEB. CENTRAL
-    page.wait_for_timeout(300)
-    page.keyboard.press("Control+A")
-    page.keyboard.press("Backspace")
-    page.keyboard.type(str(linha['RECEB. CENTRAL']))
-    page.keyboard.press("Tab")
-    page.wait_for_timeout(100)
-    page.keyboard.press("Tab")
-
-    page.wait_for_timeout(300)
-
-    # INSERINDO VALOR
-    page.wait_for_timeout(100)
-    page.keyboard.press("Control+A")
-    page.keyboard.press("Backspace")
-    page.keyboard.type(str(linha['VALOR']))
+    page.keyboard.type(str(linha.get('VALOR', '0,00')))
     page.keyboard.press("Enter")
 
+    # SALVAR OU NOVA INCLUSÃO
     page.wait_for_timeout(300)
     if num_atual == total:
-        print(f"Último registro ({num_atual}/{total}) detectado. Salvando e fechando...")
+        print(f"🏁 Último registro ({num_atual}/{total}) detectado.")
         page.get_by_role("button", name="Salvar e Fechar").click()
     else:
-        print(f"Registro {num_atual}/{total} concluído. Abrindo nova inclusão...")
+        print(f"✅ Registro {num_atual}/{total} concluído.")
         page.get_by_role("button", name="Nova Inclusão").click()
-    page.wait_for_timeout(pausa*1000) # Aguarda o sistema processar a transição
-    
-    print(f"Processo: {linha['PROCESSO']} incluído com sucesso!")
 
-def iniciar_automacao():
-    pausa, pw, df_dados = obter_dados()
-    if df_dados is None: return
-    
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
+    # SALVAR PROGRESSO NO EXCEL
+    df_dados.at[index, 'CONTROLE'] = 'S'
+    try:
+        df_dados.to_excel(caminho_arquivo, index=False)
+        print(f"💾 Planilha salva: {linha['PROCESSO']}")
+    except Exception:
+        print(f"⚠️ Erro ao salvar planilha: feche o arquivo {caminho_arquivo}!")
 
-        try:
-            realizar_login(pw, page)
-
-            # Navegação inicial para Gratuitos
-            page.get_by_role("link").nth(2).click()
-            # page.get_by_role("tab", name="Gratuitos").click()
-            print('Lançando em PAGOS')
-
-            btn1 = page.get_by_role("button", name=" Adicionar Mandado").first # .first evita conflitos se houver dois na tela
-            btn1.wait_for(state="visible", timeout=5000)
-            if btn1.is_enabled():
-                btn1.click()
-
-            btn2 = page.get_by_label("Adicionar").get_by_role("button", name=" Adicionar Mandado")
-            btn2.wait_for(state="visible", timeout=5000)
-            if btn2.is_enabled():
-                btn2.click()
-
-            total_registros = len(df_dados)
-
-            for index, linha in df_dados.iterrows():
-                if linha['FORMA PAGAMENTO'] == 'JUSTIÇA PAGA':
-                    print(f"Lançando processo: {linha['PROCESSO']}")
-                    lancar_mandado(pausa, page, linha, index + 1, total_registros)
-                else:
-                    pass
-            
-        except Exception as e:
-            print(f"Ocorreu um erro: {e}")
-        finally:
-            page.wait_for_timeout(5000)
-            #browser.close()
-
-if __name__ == "__main__":
-    iniciar_automacao()
+    page.wait_for_timeout(pausa * 1000)

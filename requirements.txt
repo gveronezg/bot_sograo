@@ -1,5 +1,5 @@
-playwright
-pandas
-python-calamine
-openpyxl
-python-dotenv
+playwright==1.49.1
+pandas==2.2.3
+python-dotenv==1.0.1
+openpyxl==3.1.5
+python-calamine==0.2.3
