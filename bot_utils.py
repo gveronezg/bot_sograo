@@ -5,20 +5,28 @@ from playwright.sync_api import sync_playwright
 
 load_dotenv()
 
+import sys
+from pathlib import Path
+
 def configurar_navegador(p):
-    """Inicializa o browser e a página, instalando drivers se necessário."""
-    try:
-        browser = p.chromium.launch(headless=False)
-    except Exception as e:
-        if "Executable doesn't exist" in str(e) or "playwright install" in str(e).lower():
-            print("\n⚠️  Navegador não encontrado! Iniciando instalação automática (isso só acontece uma vez)...")
-            import subprocess
-            import sys
-            subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
-            browser = p.chromium.launch(headless=False)
-        else:
-            raise e
+    """Tenta abrir os navegadores do sistema (Chrome ou Edge) do usuário."""
+    canais = ["chrome", "msedge"]
+    
+    for canal in canais:
+        try:
+            print(f"🔍 Tentando iniciar pelo navegador: {canal}...")
+            browser = p.chromium.launch(channel=canal, headless=False)
+            context = browser.new_context()
+            page = context.new_page()
+            print(f"✅ Navegador {canal} iniciado com sucesso!")
+            return browser, page
+        except Exception:
+            print(f"❌ {canal} não encontrado...")
+            continue
             
+    # Se falhar tudo, tenta o Chromium padrão (exige instalação)
+    print("⚠️ Nenhum navegador do sistema encontrado. Tentando Chromium padrão...")
+    browser = p.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
     return browser, page

@@ -20,3 +20,11 @@
 2026-03-01 19:23:50,961 - ETL-SAJ - INFO - 💾 Carga concluída: 167 registros processados.
 2026-03-01 19:23:50,961 - ETL-SAJ - INFO - 📍 Arquivo salvo em: C:\Users\HD1T\Desktop\Gabriel\GIT_HUB\bot_sograo\Dados_Tratados_12_2025.xlsx
 2026-03-01 19:23:50,964 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
+2026-03-01 21:40:54,772 - ETL-SAJ - INFO - Iniciando Etapa de Extração...
+2026-03-01 21:40:57,658 - ETL-SAJ - INFO - Carregando: Relatorio.xlsx
+2026-03-01 21:40:57,677 - ETL-SAJ - INFO - Iniciando Etapa de Transformação...
+2026-03-01 21:41:03,131 - ETL-SAJ - INFO - Iniciando tratamento pesado: Mês Dezembro, Cota 111.06
+2026-03-01 21:41:03,156 - ETL-SAJ - INFO - Iniciando Etapa de Carga...
+2026-03-01 21:41:03,592 - ETL-SAJ - INFO - 💾 Carga concluída: 167 registros processados.
+2026-03-01 21:41:03,593 - ETL-SAJ - INFO - 📍 Arquivo salvo em: C:\Users\HD1T\Desktop\Gabriel\GIT_HUB\bot_sograo\Dados_Tratados_12_2025.xlsx
+2026-03-01 21:41:03,596 - ETL-SAJ - INFO -                   ETL FINALIZADO COM SUCESSO.
